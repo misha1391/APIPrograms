@@ -1,0 +1,42 @@
+[
+  {
+    "id": 0,
+    "name": "Misha",
+    "subject": "ICT",
+    "grade": 12,
+    "date": "2025.11.03",
+    "teacher": "Alexey"
+  },
+  {
+    "id": 1,
+    "name": "Misha",
+    "subject": "ICT",
+    "grade": 11,
+    "date": "2025.11.05",
+    "teacher": "Alexey"
+  },
+  {
+    "id": 2,
+    "name": "Misha",
+    "subject": "ICT",
+    "grade": 12,
+    "date": "2025.11.03",
+    "teacher": "Alexey"
+  },
+  {
+    "id": 3,
+    "name": "Misha",
+    "subject": "History",
+    "grade": 12,
+    "date": "2025.11.05",
+    "teacher": "Boris"
+  },
+  {
+    "id": 4,
+    "name": "Misha",
+    "subject": "ICT",
+    "grade": 12,
+    "date": "2025.11.03",
+    "teacher": "Alexey"
+  }
+]
