@@ -6,6 +6,7 @@ import json
 app = FastAPI()
 
 JSON_FILE = "grades.json"
+JSON_CLASSES = "classesList.json"
 
 def load_data():
     try:
@@ -14,10 +15,20 @@ def load_data():
     except Exception as e:
         return []
 
+def load_classes():
+    try:
+        with open(JSON_CLASSES, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        return []
+
 def save_data(grades):
     with open(JSON_FILE, "w") as f:
         return json.dump(grades, f, indent=2)
 
+def save_class(classes):
+    with open(JSON_CLASSES, "w") as f:
+        return json.dump(classes, f, indent=2)
 def generate_id():
     grades = load_data()
     if not grades:
@@ -76,11 +87,52 @@ def change_grade(data: Dict[str, Any]):
 
 @app.get("/grades/{grade_id}")
 def get_grade_by_id(grade_id: int):
-    grades = load_data()
+    grades = load_classes()
     for grade in grades:
         if grade["id"] == grade_id:
             return grade
     return {"ERROR": "Нет такой оценки"}
+
+@app.get("/classes")
+def get_all_classes():
+    return load_classes()
+@app.post("/classes")
+def add_class(data: Dict[str, Any]):
+    classes = load_classes()
+    new_class = {
+        "code": data["code"],
+        "students": data["code"],
+        "year": data["code"],
+        "classroom_teacher": data["code"]
+    }
+
+    classes.append(new_class)
+    save_class(classes)
+    return {"Success": "Failure"}
+@app.delete("/classes/{class_code}")
+def delete_class(class_code: int):
+    classes = load_classes()
+    for i, clas in enumerate(classes):
+        if clas["code"] == class_code:
+            deleted_class = classes.pop(i)
+            save_data(classes)
+            return deleted_class
+    return {"ERROR": "Нет такого класса"}
+@app.put("/classes")
+def change_class(data: Dict[str, Any]):
+    classes = load_classes()
+    new_class = {
+        "code": data["code"],
+        "students": data["students"],
+        "year": data["year"],
+        "classroom_teacher": data["classroom_teacher"]
+    }
+    for i, clas in enumerate(classes):
+        if clas["code"] == data["code"]:
+            classes[i] = new_class
+            save_data(classes)
+            return {"Success": "Failure"}
+    return {"ERROR": "Нет такого класса"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")

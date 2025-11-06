@@ -38,5 +38,13 @@
     "grade": 12,
     "date": "2025.11.03",
     "teacher": "Alexey"
+  },
+  {
+    "id": 5,
+    "name": "Misha",
+    "subject": "ICT",
+    "grade": 122,
+    "date": "2025.11.03",
+    "teacher": "Alexey"
   }
 ]
