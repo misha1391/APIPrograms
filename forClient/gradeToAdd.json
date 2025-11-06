@@ -1,9 +1,6 @@
 [
   {
-    "name": "Misha",
-    "subject": "ICT",
-    "grade": 12,
-    "date": "2025.11.03",
-    "teacher": "Alexey"
+    "model": "qwen/qwen3-4b-2507",
+    "input": "Write Russian alphabet"
   }
 ]

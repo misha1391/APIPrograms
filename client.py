@@ -8,7 +8,7 @@ import json
 # bt1 = tk.Button(text="Hello world", command=hi)
 # bt1.pack()
 
-URL = "http://127.0.0.1:8000"
+URL = "http://127.0.0.1:1234/v1/responses"
 
 def load_data(fileName: str):
     try:
@@ -29,13 +29,10 @@ def get_by_id(grade_id):
 def add_grade(fileName: str):
     grade = load_data(fileName)[0]
     data = {
-        "name": grade["name"],
-        "subject": grade["subject"],
-        "grade": grade["grade"],
-        "date": grade["date"],
-        "teacher": grade["teacher"]
+        "model": grade["model"],
+        "input": grade["input"]
     }
-    res = requests.post(f"{URL}/grades", json=data)
+    res = requests.post(f"{URL}", json=data)
     print(res.json())
 def delete_grade(grade_id):
     res = requests.delete(f"{URL}/grades/{grade_id}")
