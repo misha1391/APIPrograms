@@ -86,6 +86,14 @@ def change_grade(data: Dict[str, Any]):
 @app.get("/classes")
 def get_all_classes():
     return load_data(JSON_CLASSES)
+
+@app.get("/classes/{class_id}")
+def get_class_by_id(class_id: int):
+    classes = load_data(JSON_CLASSES)
+    for clas in classes:
+        if clas["id"] == class_id:
+            return clas
+    return {"ERROR": "Нет такой оценки"}
 @app.post("/classes")
 def add_class(data: Dict[str, Any]):
     classes = load_data(JSON_CLASSES)
