@@ -3,6 +3,8 @@ import json
 
 URL = "http://127.0.0.1:8000"
 
+# HELPERS
+
 def load_data(fileName: str):
     try:
         with open(fileName, "r") as f:
@@ -12,6 +14,9 @@ def load_data(fileName: str):
 def save_data(fileName: str, data):
     with open(fileName, "w") as f:
         return json.dump(data, f, indent=2)
+
+# GRADE WORK
+
 def get_grades(fileName: str):
     req = requests.get(f"{URL}/grades")
     save_data(fileName, req.json())
@@ -47,6 +52,8 @@ def change_grade(fileName: str):
     res = requests.put(f"{URL}/grades", json=data)
     print(res.json())
 
+# CLASS WORK
+
 def get_all_classes():
     req = requests.get(f"{URL}/classes")
     print(req.json())
@@ -81,7 +88,7 @@ if __name__ == "__main__":
     #New
     get_grades("forClient/allGrades.json")
     add_grade("forClient/gradeToAdd.json")
-    delete_grade("forClient/gradeToAdd.json", 3)
+    delete_grade("forClient/gradeDeleted.json", 3)
     change_grade("forClient/gradeToPut.json")
 
     #Old
