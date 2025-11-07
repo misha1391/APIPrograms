@@ -1,0 +1,12 @@
+[
+  {
+    "code": "200",
+    "students": [
+      "default student1",
+      "default student2",
+      "default student3"
+    ],
+    "year": 200,
+    "classroom_teacher": "default classroom teacher"
+  }
+]

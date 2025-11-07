@@ -1,0 +1,24 @@
+[
+  {
+    "id": 0,
+    "code": "P411",
+    "students": [
+      "Misha",
+      "Lev",
+      "Damir"
+    ],
+    "year": 3,
+    "classroom_teacher": "Alexey"
+  },
+  {
+    "id": 1,
+    "code": "default code",
+    "students": [
+      "default student1",
+      "default student2",
+      "default student3"
+    ],
+    "year": 200,
+    "classroom_teacher": "default classroom teacher"
+  }
+]

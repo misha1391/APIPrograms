@@ -5,27 +5,27 @@ URL = "http://127.0.0.1:8000"
 
 # HELPERS
 
-def load_data(fileName: str):
+def load_data(filename: str):
     try:
-        with open(fileName, "r") as f:
+        with open(filename, "r") as f:
             return json.load(f)
     except Exception as e:
         return []
-def save_data(fileName: str, data):
-    with open(fileName, "w") as f:
+def save_data(filename: str, data):
+    with open(filename, "w") as f:
         return json.dump(data, f, indent=2)
 
 # GRADE WORK
 
-def get_grades(fileName: str):
+def get_grades(filename: str):
     req = requests.get(f"{URL}/grades")
-    save_data(fileName, req.json())
+    save_data(filename, req.json())
     print(req.json())
-def get_by_id(grade_id):
+def get_grade_by_id(grade_id: int):
     res = requests.get(f"{URL}/grades/{grade_id}")
     print(res.json())
-def add_grade(fileName: str):
-    grade = load_data(fileName)[0]
+def add_grade(filename: str):
+    grade = load_data(filename)[0]
     data = {
         "name": grade["name"],
         "subject": grade["subject"],
@@ -39,8 +39,8 @@ def delete_grade(filename:str, grade_id: int):
     res = requests.delete(f"{URL}/grades/{grade_id}")
     save_data(filename, res.json())
     print(res.json())
-def change_grade(fileName: str):
-    grade = load_data(fileName)[0]
+def change_grade(filename: str):
+    grade = load_data(filename)[0]
     data = {
         "id": grade["id"],
         "name": grade["name"],
@@ -54,9 +54,13 @@ def change_grade(fileName: str):
 
 # CLASS WORK
 
-def get_all_classes():
+def get_all_classes(filename: str):
     req = requests.get(f"{URL}/classes")
+    save_data(filename, req.json())
     print(req.json())
+def get_class_by_id(class_id: int):
+    res = requests.get(f"{URL}/grades/{class_id}")
+    print(res.json())
 def add_class(filename: str):
     data = load_data(filename)[0]
     new_class = {
@@ -67,33 +71,37 @@ def add_class(filename: str):
     }
     res = requests.post(f"{URL}/classes", json=data)
     print(res.json())
-def delete_class(id: int):
-    res = requests.delete(f"{URL}/grades/{id}")
+def delete_class(filename: str, id: int):
+    res = requests.delete(f"{URL}/classes/{id}")
+    save_data(filename, res.json())
     print(res.json())
 def change_class(filename: str):
     data = load_data(filename)[0]
     new_class = {
+        "id": data["id"],
         "code": data["code"],
         "students": data["students"],
         "year": data["year"],
         "classroom_teacher": data["classroom_teacher"]
     }
-    res = requests.put(f"{URL}/grades", json=data)
+    res = requests.put(f"{URL}/classes", json=data)
     print(res.json())
 
 if __name__ == "__main__":
-    # get_all_classes()
-    # add_class("default code", ["name1", "name2", "name3"], 404, "default teacher")
-    # delete_class("default code")
-    # change_class("default code", ["name1", "name2", "name3", "name404"], 404, "default teacher")
+    # get_all_classes("forClient/class/allClasses.json")
+    # get_class_by_id(1)
+    # add_class("forClient/class/addClass.json")
+    # delete_class("forClient/class/deletedClass.json", 2)
+    # change_class("forClient/class/putClass.json")
 
     #New
-    # get_grades("forClient/allGrades.json")
-    # add_grade("forClient/gradeToAdd.json")
-    # delete_grade("forClient/gradeDeleted.json", 6)
-    # change_grade("forClient/gradeToPut.json")
+    # get_grades("forClient/grade/allGrades.json")
+    # get_grade_by_id(5)
+    # add_grade("forClient/grade/gradeToAdd.json")
+    # delete_grade("forClient/grade/gradeDeleted.json", 6)
+    # change_grade("forClient/grade/gradeToPut.json")
 
-    #Old
+    #Old(Not working now)
     # get_grades()
     # add_grade("Misha", "ICT", 12, "2025.11.03", "Alexey")
     # delete_grade(4)
