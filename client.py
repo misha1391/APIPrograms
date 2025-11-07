@@ -3,6 +3,8 @@ import json
 
 URL = "http://127.0.0.1:8000"
 
+# HELPERS
+
 def load_data(fileName: str):
     try:
         with open(fileName, "r") as f:
@@ -12,6 +14,9 @@ def load_data(fileName: str):
 def save_data(fileName: str, data):
     with open(fileName, "w") as f:
         return json.dump(data, f, indent=2)
+
+# GRADE WORK
+
 def get_grades(fileName: str):
     req = requests.get(f"{URL}/grades")
     save_data(fileName, req.json())
@@ -32,7 +37,7 @@ def add_grade(fileName: str):
     print(res.json())
 def delete_grade(filename:str, grade_id: int):
     res = requests.delete(f"{URL}/grades/{grade_id}")
-    save_data(filename, res)
+    save_data(filename, res.json())
     print(res.json())
 def change_grade(fileName: str):
     grade = load_data(fileName)[0]
@@ -47,27 +52,31 @@ def change_grade(fileName: str):
     res = requests.put(f"{URL}/grades", json=data)
     print(res.json())
 
+# CLASS WORK
+
 def get_all_classes():
     req = requests.get(f"{URL}/classes")
     print(req.json())
-def add_class(code: str, students: list[str], year: int, classroom_teacher: str):
-    data = {
-        "code": code,
-        "students": students,
-        "year": year,
-        "classroom_teacher": classroom_teacher
+def add_class(filename: str):
+    data = load_data(filename)[0]
+    new_class = {
+        "code": data["code"],
+        "students": data["students"],
+        "year": data["year"],
+        "classroom_teacher": data["classroom_teacher"]
     }
     res = requests.post(f"{URL}/classes", json=data)
     print(res.json())
-def delete_class(code: str):
-    res = requests.delete(f"{URL}/grades/{code}")
+def delete_class(id: int):
+    res = requests.delete(f"{URL}/grades/{id}")
     print(res.json())
-def change_class(code: str, students: list[str], year: int, classroom_teacher: str):
-    data = {
-        "code": code,
-        "students": students,
-        "year": year,
-        "classroom_teacher": classroom_teacher
+def change_class(filename: str):
+    data = load_data(filename)[0]
+    new_class = {
+        "code": data["code"],
+        "students": data["students"],
+        "year": data["year"],
+        "classroom_teacher": data["classroom_teacher"]
     }
     res = requests.put(f"{URL}/grades", json=data)
     print(res.json())
@@ -79,10 +88,10 @@ if __name__ == "__main__":
     # change_class("default code", ["name1", "name2", "name3", "name404"], 404, "default teacher")
 
     #New
-    get_grades("forClient/allGrades.json")
-    add_grade("forClient/gradeToAdd.json")
-    delete_grade("forClient/gradeToAdd.json", 3)
-    change_grade("forClient/gradeToPut.json")
+    # get_grades("forClient/allGrades.json")
+    # add_grade("forClient/gradeToAdd.json")
+    # delete_grade("forClient/gradeDeleted.json", 6)
+    # change_grade("forClient/gradeToPut.json")
 
     #Old
     # get_grades()
