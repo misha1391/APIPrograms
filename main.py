@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.responses import FileResponse # Для добавления страницы
+from fastapi.staticfiles import StaticFiles
 from typing import Dict, Any # Нужно для объявления внутри add_grade
 import uvicorn
 import json
@@ -7,6 +9,8 @@ app = FastAPI()
 
 JSON_GRADE = "grades.json"
 JSON_CLASSES = "classesList.json"
+
+app.mount("/", StaticFiles(path"/", ),)
 
 # HELPERS
 
@@ -28,6 +32,9 @@ def generate_id(filename: str):
 
 # GRADE WORK
 
+@app.get("/")
+def site():
+    return FileResponse("Site.html")
 @app.get("/grades") # Отправить клиенту
 def get_grades():
     return load_data(JSON_GRADE)
